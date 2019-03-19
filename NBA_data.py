@@ -1,6 +1,8 @@
 from lxml import html
 import requests
 import sys
+import json
+import urllib
 
 
 # function to remove spaces, newlines, and other undesirable characters from strings
@@ -14,9 +16,9 @@ def clean_data(raw_list, destination_list):
     return destination_list
 
 
-# main program
-def main(website):
-    page = requests.get(website, headers={'User-Agent': 'nbaScoresRobot/1.0 (aravella1@gmail.com)'})
+# today data program
+def today(website):
+    page = requests.get(website)
 
     tree = html.fromstring(page.text)
 
@@ -84,6 +86,17 @@ def main(website):
         print(status + '\n')
 
 
+def load_url(url):
+    return urllib.request.urlopen(url).read().decode('utf-8')
+
+
+def favourite_team(team):
+    url_favor_team = 'http://site.api.espn.com/apis/site/v2/sports/basketball/nba/teams/%s' % team
+    json_data = json.loads(load_url(url_favor_team))
+    print(team)
+    print('Next Game: %s' % json_data['team']['nextEvent'][0]['date'][0:9])
+
+
 if __name__ == '__main__':
     # processing arguments, error checking and handling
     if len(sys.argv) > 2:
@@ -94,4 +107,5 @@ if __name__ == '__main__':
         url = 'https://www.si.com/nba/scoreboard?date=%s' % sys.argv[1]
     else:
         url = 'https://www.si.com/nba/scoreboard'
-    main(url)
+    today(url)
+    favourite_team('LAL')
