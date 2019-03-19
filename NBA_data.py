@@ -94,7 +94,18 @@ def favourite_team(team):
     url_favor_team = 'http://site.api.espn.com/apis/site/v2/sports/basketball/nba/teams/%s' % team
     json_data = json.loads(load_url(url_favor_team))
     print(team)
-    print('Next Game: %s' % json_data['team']['nextEvent'][0]['date'][0:9])
+    print('Next Game: %s' % json_data['team']['nextEvent'][0]['date'][0:9], '\n')
+
+
+def standing():
+    url_standing = 'https://site.web.api.espn.com/apis/v2/sports/basketball/nba/standings?region=us&lang=en' \
+                   '&contentorigin=espn&type=0&level=2&sort=playoffseed%3Aasc '
+    json_data = json.loads(load_url(url_standing))
+    print('Standings:')
+    for n in range(15):
+        east = json_data['children'][0]['standings']['entries'][n]['team']['displayName']
+        west = json_data['children'][1]['standings']['entries'][n]['team']['displayName']
+        print('{0:3} {1:30} {2:3} {3:30}'.format(n+1, east, n+1, west))
 
 
 if __name__ == '__main__':
@@ -109,3 +120,4 @@ if __name__ == '__main__':
         url = 'https://www.si.com/nba/scoreboard'
     today(url)
     favourite_team('LAL')
+    standing()
