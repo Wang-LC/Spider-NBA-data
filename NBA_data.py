@@ -158,5 +158,7 @@ if __name__ == '__main__':
     else:
         url = 'https://www.si.com/nba/scoreboard'
     today(url)
+    print('-'*50)
     favourite_team('LAL')
+    print('-'*50)
     standing().pprint()
