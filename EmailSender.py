@@ -1,16 +1,17 @@
 # -*- coding: utf-8 -*-
-#!/usr/bin/env python
+# !/usr/bin/env python
 
 import smtplib
 from email.mime.text import MIMEText
 
+
 class mailsender:
     def __init__(self):
-        self.mail_host = 'smtp.163.com'
-        self.mail_user = '*****@163.com'
-        self.mail_password = '******'
-        self.sender = '*****1@163.com'
-        self.receivers = ['******@qq.com']
+        self.mail_host = 'smtp.gmail.com'
+        self.mail_user = 'wlc.9424@gmail.com'
+        self.mail_password = 'jkhonssyfmcnfuly'
+        self.sender = 'wlc.9424@gmail.com'
+        self.receivers = ['wanglic@oregonstate.edu']
 
     def sendMsg(self, content, title):
         message = MIMEText(content, 'plain', 'utf-8')
@@ -33,10 +34,12 @@ class mailsender:
         except smtplib.SMTPException as e:
             print('error', e)
 
+
 def test():
     sender = mailsender()
     content = u"nba msg"
     sender.sendMsg(content, "nba")
+
 
 if __name__ == "__main__":
     test()

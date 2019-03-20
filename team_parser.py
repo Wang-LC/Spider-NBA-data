@@ -1,5 +1,6 @@
+# !/usr/bin/env python
 import json
-import urllib
+from urllib import request
 
 
 class Team:
@@ -28,9 +29,15 @@ class Team:
         print('HOME: %s' % self.home)
         print('AWAY: %s' % self.away)
 
+    def write(self):
+        content = ['FAVORITE TEAM:', '-' * 20, '%s (%s)' % (self.name, self.record),
+                   'Next Game: %s' % self.event[0:10], 'Points Per Game: %.1f' % self.ppg,
+                   'Opponent Point Per Game: %.1f' % self.opp, 'HOME: %s' % self.home, 'AWAY: %s' % self.away]
+        return content
+
 
 def load_url(url):
-    return urllib.request.urlopen(url).read().decode('utf-8')
+    return request.urlopen(url).read().decode('utf-8')
 
 
 def team_data(team):  # scraping favourite team next event by json

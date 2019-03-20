@@ -1,5 +1,6 @@
+# !/usr/bin/env python
 import json
-import urllib
+from urllib import request
 
 
 class Standing:
@@ -32,9 +33,26 @@ class Standing:
         for n, name, stats in western:
             print('{0:2} {1:40} {2:10}'.format(n, name, stats))
 
+    def write(self):
+        content = []
+        n = range(1, 16)
+        eastern = zip(n, self.eastName, self.eastStats)
+        western = zip(n, self.westName, self.westStats)
+
+        content.append('Eastern:')
+        content.append('-'*12)
+        for n, name, stats in eastern:
+            content.append('{0:3} {1:30} {2:20}'.format(n, name, stats))
+        content.append('*'*60)
+        content.append('Western:')
+        content.append('-' * 12)
+        for n, name, stats in western:
+            content.append('{0:2} {1:40} {2:10}'.format(n, name, stats))
+        return content
+
 
 def load_url(url):
-    return urllib.request.urlopen(url).read().decode('utf-8')
+    return request.urlopen(url).read().decode('utf-8')
 
 
 def standing_data(url):  # scraping standings by json
@@ -50,8 +68,8 @@ def standing_data(url):  # scraping standings by json
     for n in range(15):
         east_name.append(json_data['children'][0]['standings']['entries'][n]['team']['displayName'])
         west_name.append(json_data['children'][1]['standings']['entries'][n]['team']['displayName'])
-        east_stats.append(json_data['children'][0]['standings']['entries'][n]['stats'][12]['displayValue'])
-        west_stats.append(json_data['children'][1]['standings']['entries'][n]['stats'][12]['displayValue'])
+        east_stats.append(json_data['children'][0]['standings']['entries'][n]['stats'][-6]['displayValue'])
+        west_stats.append(json_data['children'][1]['standings']['entries'][n]['stats'][-6]['displayValue'])
 
     return Standing(east_name, east_stats, west_name, west_stats)
 
