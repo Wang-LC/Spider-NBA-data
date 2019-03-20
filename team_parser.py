@@ -84,7 +84,6 @@ def data_plot(team):
     add_labels(rects1)
     add_labels(rects2)
     plt.savefig('bar.png')
-    plt.show()
 
 
 def add_labels(rects):
@@ -98,3 +97,4 @@ if __name__ == '__main__':
     team = 'LAL'
     team_data(team).pprint()
     data_plot(team)
+    plt.show()

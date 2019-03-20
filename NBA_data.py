@@ -5,6 +5,7 @@ from team_parser import team_data
 import datetime
 from EmailSender import mailsender
 from team_parser import data_plot
+import sys
 
 
 def main(team):
@@ -24,5 +25,9 @@ def main(team):
 
 
 if __name__ == '__main__':
-    main('GSW')
+    if len(sys.argv) != 2:
+        print('Please use short name (in teamshortname.txt)')
+        exit()
+    else:
+        main(sys.argv[1])
 
