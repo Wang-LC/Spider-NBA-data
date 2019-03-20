@@ -3,6 +3,8 @@
 
 import smtplib
 from email.mime.text import MIMEText
+from email.mime.image import MIMEImage
+from email.mime.multipart import MIMEMultipart
 
 
 class mailsender:
@@ -13,11 +15,19 @@ class mailsender:
         self.sender = 'wlc.9424@gmail.com'
         self.receivers = ['wanglic@oregonstate.edu']
 
-    def sendMsg(self, content, title):
-        message = MIMEText(content, 'plain', 'utf-8')
+    def sendMsg(self, content, image, title):
+        message = MIMEMultipart('related')
         message['Subject'] = title
         message['From'] = self.sender
         message['To'] = self.receivers[0]
+        text = MIMEText(content, 'plain', 'utf-8')
+        message.attach(text)
+        file = open(image, "rb")
+        img_data = file.read()
+        file.close()
+        img = MIMEImage(img_data)
+        img.add_header('Content-ID', 'dns_config')
+        message.attach(img)
 
         try:
             # create a smtp object and connect with SSL
