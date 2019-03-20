@@ -10,3 +10,7 @@ __pycache__/NBA_data.cpython-37.pyc
 .idea/misc.xml
 .idea/encodings.xml
 *.pyc
+*.png
+*.xml
+*.xml
+.idea/other.xml
