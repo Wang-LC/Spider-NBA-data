@@ -23,6 +23,10 @@ class Game:
         content = ['TODAY:', '-'*10]
         games = zip(self.team1, self.team2, self.score1, self.score2, self.stats)
         for team_a, team_b, score_a, score_b, stat in games:
+            if score_a > score_b:
+                team_a += '*'
+            elif score_b > score_a:
+                team_b += '*'
             content.append('{0:30} {1:20}'.format(team_a, score_a))
             content.append('{0:30} {1:20}'.format(team_b, score_b))
             content.append(stat)
